@@ -11,7 +11,7 @@ from sklearn.metrics import accuracy_score
 # ======================
 # Dataset
 # ======================
-dimport kagglehub
+import kagglehub
 import pandas as pd
 import os
 
