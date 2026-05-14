@@ -120,16 +120,16 @@ elif page == "Make Prediction":
     st.title("Predict Stroke")
 
     bmi = st.slider("bmi", 10, 50, 25)
-    avg_glucose_level = st.slider("avg_glucose_level", 60, 130, 80)
+    avg_glucose_level = st.slider("avg_glucose_level", 60,220, 100)
 
     if st.button("Predict"):
-        input_data = np.array([[blood_sugar, blood_pressure]])
+        input_data = np.array([[bmi, avg_glucose_level]])
         prediction = knn.predict(input_data)[0]
 
         if prediction == 0:
             label = "Healthy"
         else:
-            label = "Diabetes"
+            label = "Stroke"
 
         st.subheader(f"Prediction: {label}")
 
@@ -137,9 +137,9 @@ elif page == "Make Prediction":
         # Add point to plot
         # ======================
         new_point = pd.DataFrame({
-            "blood_sugar": [blood_sugar],
-            "blood_pressure": [blood_pressure],
-            "diabetes": [2]  # new category
+            "bmi": [bmi],
+            "age": [age],
+            "stroke": [2]  # new category
         })
 
         plot_df = pd.concat([df, new_point], ignore_index=True)
@@ -148,7 +148,7 @@ elif page == "Make Prediction":
 
         st.scatter_chart(
             plot_df,
-            x="blood_sugar",
-            y="blood_pressure",
-            color="diabetes"
+            x="bmi",
+            y="avg_glucose_level",
+            color="stroke"
         )
