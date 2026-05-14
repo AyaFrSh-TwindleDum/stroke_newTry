@@ -71,7 +71,7 @@ knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(X_train, y_train)
 y_pred = knn.predict(X_test)
 from sklearn.metrics import accuracy_score, classification_report
-
+accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy_score(y_test, y_pred):.2f}")
 
 
