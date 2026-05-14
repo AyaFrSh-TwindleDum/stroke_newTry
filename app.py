@@ -87,9 +87,9 @@ page = st.sidebar.radio(
     ["Dataset", "Model Performance", "Make Prediction"]
 )
 
-======================
-Page 1: Dataset
-======================
+# ======================
+# Page 1: Dataset
+# ======================
 if page == "Dataset":
     st.title("Dataset")
 
