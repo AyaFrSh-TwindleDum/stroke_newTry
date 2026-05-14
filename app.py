@@ -87,68 +87,68 @@ page = st.sidebar.radio(
     ["Dataset", "Model Performance", "Make Prediction"]
 )
 
+======================
+Page 1: Dataset
+======================
+if page == "Dataset":
+    st.title("Dataset")
+
+    st.subheader("Data")
+    st.dataframe(df)
+
+    st.subheader("Scatter Plot")
+
+    st.scatter_chart(
+        df,
+        x="bmi",
+        y="avg_glucose_level",
+        color="stroke"
+    )
+
 # ======================
-# Page 1: Dataset
+# Page 2: Performance
 # ======================
-# if page == "Dataset":
-#     st.title("Dataset")
+elif page == "Model Performance":
+    st.title("Model Performance")
 
-#     st.subheader("Data")
-#     st.dataframe(df)
+    st.metric("Accuracy", f"{accuracy:.2f}")
 
-#     st.subheader("Scatter Plot")
+# ======================
+# Page 3: Prediction
+# ======================
+elif page == "Make Prediction":
+    st.title("Predict Stroke")
 
-#     st.scatter_chart(
-#         df,
-#         x="blood_sugar",
-#         y="blood_pressure",
-#         color="diabetes"
-#     )
+    bmi = st.slider("bmi", 10, 50, 25)
+    avg_glucose_level = st.slider("avg_glucose_level", 60, 130, 80)
 
-# # ======================
-# # Page 2: Performance
-# # ======================
-# elif page == "Model Performance":
-#     st.title("Model Performance")
+    if st.button("Predict"):
+        input_data = np.array([[blood_sugar, blood_pressure]])
+        prediction = knn.predict(input_data)[0]
 
-#     st.metric("Accuracy", f"{accuracy:.2f}")
+        if prediction == 0:
+            label = "Healthy"
+        else:
+            label = "Diabetes"
 
-# # ======================
-# # Page 3: Prediction
-# # ======================
-# elif page == "Make Prediction":
-#     st.title("Predict Diabetes")
+        st.subheader(f"Prediction: {label}")
 
-#     blood_sugar = st.slider("Blood Sugar", 70, 220, 120)
-#     blood_pressure = st.slider("Blood Pressure", 60, 130, 80)
+        # ======================
+        # Add point to plot
+        # ======================
+        new_point = pd.DataFrame({
+            "blood_sugar": [blood_sugar],
+            "blood_pressure": [blood_pressure],
+            "diabetes": [2]  # new category
+        })
 
-#     if st.button("Predict"):
-#         input_data = np.array([[blood_sugar, blood_pressure]])
-#         prediction = knn.predict(input_data)[0]
+        plot_df = pd.concat([df, new_point], ignore_index=True)
 
-#         if prediction == 0:
-#             label = "Healthy"
-#         else:
-#             label = "Diabetes"
+        st.subheader("Visualization")
 
-#         st.subheader(f"Prediction: {label}")
-
-#         # ======================
-#         # Add point to plot
-#         # ======================
-#         new_point = pd.DataFrame({
-#             "blood_sugar": [blood_sugar],
-#             "blood_pressure": [blood_pressure],
-#             "diabetes": [2]  # new category
-#         })
-
-#         plot_df = pd.concat([df, new_point], ignore_index=True)
-
-#         st.subheader("Visualization")
-
-#         st.scatter_chart(
-#             plot_df,
-#             x="blood_sugar",
-#             y="blood_pressure",
-#             color="diabetes"
-#         )
+        st.scatter_chart(
+            plot_df,
+            x="blood_sugar",
+            y="blood_pressure",
+            color="diabetes"
+        )
