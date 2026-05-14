@@ -121,9 +121,10 @@ elif page == "Make Prediction":
 
     bmi = st.slider("bmi", 10, 50, 25)
     avg_glucose_level = st.slider("avg_glucose_level", 60,220, 100)
+    age= st.slider("age",0,130,30)
 
     if st.button("Predict"):
-        input_data = np.array([[bmi, avg_glucose_level]])
+        input_data = np.array([[bmi, avg_glucose_level,age]])
         prediction = knn.predict(input_data)[0]
 
         if prediction == 0:
@@ -133,22 +134,22 @@ elif page == "Make Prediction":
 
         st.subheader(f"Prediction: {label}")
 
-        # ======================
-        # Add point to plot
-        # ======================
-        new_point = pd.DataFrame({
-            "bmi": [bmi],
-            "age": [age],
-            "stroke": [2]  # new category
-        })
+        # # ======================
+        # # Add point to plot
+        # # ======================
+        # new_point = pd.DataFrame({
+        #     "bmi": [bmi],
+        #     "age": [age],
+        #     "stroke": [2]  # new category
+        # })
 
-        plot_df = pd.concat([df, new_point], ignore_index=True)
+        # plot_df = pd.concat([df, new_point], ignore_index=True)
 
-        st.subheader("Visualization")
+        # st.subheader("Visualization")
 
-        st.scatter_chart(
-            plot_df,
-            x="bmi",
-            y="avg_glucose_level",
-            color="stroke"
-        )
+        # st.scatter_chart(
+        #     plot_df,
+        #     x="bmi",
+        #     y="avg_glucose_level",
+        #     color="stroke"
+        # )
